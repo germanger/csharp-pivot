@@ -10,7 +10,7 @@ Pivot data with aggregation and output to HTML
       <th>Family</th>
       <th>Name</th>
       <th>Size</th>
-      <th>Quant</th>
+      <th>Quantity</th>
    </tr>
    <tr class=''>
       <td class=''>Felidae</td>
@@ -140,7 +140,7 @@ In this example we are going to group by "Size"
             new ColumnDefinition { HeaderName = "Family", Field = "Family", CssClass = "", Width = 100 },
             new ColumnDefinition { HeaderName = "Name", Field = "Name", CssClass = "", Width = 100 },
             new ColumnDefinition { HeaderName = "Size", Field = "Size", CssClass = "", Width = 100 },
-            new ColumnDefinition { HeaderName = "Quant", Field = "Quantity", CssClass = "align-right", Width = 40 }
+            new ColumnDefinition { HeaderName = "Qty", Field = "Quantity", CssClass = "align-right", Width = 40 }
         },
         pivotColumns: new string[] { "Size" },
         aggregatedColumns: new string[] { "Quantity" });
@@ -156,7 +156,7 @@ In this example we are going to group by "Size"
       <th>Family</th>
       <th>Name</th>
       <th>Size</th>
-      <th>Quant</th>
+      <th>Qty</th>
    </tr>
    <tr class='tr-group'>
       <td></td>
