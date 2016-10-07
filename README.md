@@ -3,7 +3,7 @@ Pivot data with aggregation and output to HTML
 
 ## Example
 
-1) Say your data is a list of animals
+Say your data is a list of animals
 
 <table>
    <tr class='header'>
@@ -56,7 +56,7 @@ Pivot data with aggregation and output to HTML
    </tr>
 </table>
 
-2) Set your data as a `List` of `Row`'s
+1) First, represent your data as a `List` of `Row`'s
 
     var animals = new List<Row> 
     {
@@ -132,7 +132,7 @@ Pivot data with aggregation and output to HTML
         },
     };
     
-3) Initialize grid. <br>
+2) Initialize grid. <br>
 In this example we are going to group by "Size"
 
     Grid grid = new Grid(originalData: animals,
@@ -145,11 +145,11 @@ In this example we are going to group by "Size"
         pivotColumns: new string[] { "Size" },
         aggregatedColumns: new string[] { "Quantity" });
         
-4) Get html
+3) Get html
 
     string html = grid.GetHtml();
     
-5) Output:
+4) Output:
 
 <table>
    <tr class='header'>
@@ -220,3 +220,4 @@ In this example we are going to group by "Size"
 - Format dates
 - Allow column grouping in header (eg. Column "Birth": Column "Day" + Column "Month" + Column "Year")
 - Allow other types of aggregation: average, min, max
+- Sorting
