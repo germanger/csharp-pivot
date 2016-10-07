@@ -3,7 +3,60 @@ Pivot data with aggregation and output to HTML
 
 ## Example
 
-1) Set your data as a `List` of `Row`'s
+1) Say your data is a list of animals
+
+<table>
+   <tr class='header'>
+      <th>Family</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Quant</th>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Cat</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Lion</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Tiger</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Dog</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Wolf</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Racoon</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Fox</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+</table>
+
+2) Set your data as a `List` of `Row`'s
 
     var animals = new List<Row> 
     {
@@ -79,7 +132,7 @@ Pivot data with aggregation and output to HTML
         },
     };
     
-2) Initialize grid. <br>
+3) Initialize grid. <br>
 In this example we are going to group by "Size"
 
     Grid grid = new Grid(originalData: animals,
@@ -92,11 +145,11 @@ In this example we are going to group by "Size"
         pivotColumns: new string[] { "Size" },
         aggregatedColumns: new string[] { "Quantity" });
         
-3) Get html
+4) Get html
 
     string html = grid.GetHtml();
     
-4) Output:
+5) Output:
 
 <table>
    <tr class='header'>
