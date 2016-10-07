@@ -227,7 +227,7 @@ Will output this:
       <th>Family</th>
       <th>Name</th>
       <th>Size</th>
-      <th>Quant</th>
+      <th>Qty</th>
    </tr>
    <tr class='tr-group'>
       <td class=''>Felidae</td>
