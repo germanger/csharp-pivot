@@ -7,7 +7,7 @@
     <ProjectGuid>{E15A7F15-9F72-4178-933F-E50CCD708253}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PivotDataProject</RootNamespace>
+    <RootNamespace>GridProject</RootNamespace>
     <AssemblyName>PivotDataProject</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -4,62 +4,83 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PivotDataProject
+namespace GridProject
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var animals = new List<Dictionary<string, object>> 
+            var animals = new List<Row> 
             {
-                new Dictionary<string, object> 
+                new Row 
                 {
-                    { "Name", "Cat" },
-                    { "Family", "Felidae" },
-                    { "Size", "Small" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Cat" },
+                        { "Family", "Felidae" },
+                        { "Size", "Small" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Lion" },
-                    { "Family", "Felidae" },
-                    { "Size", "Tall" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Lion" },
+                        { "Family", "Felidae" },
+                        { "Size", "Tall" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Tiger" },
-                    { "Family", "Felidae" },
-                    { "Size", "Tall" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Tiger" },
+                        { "Family", "Felidae" },
+                        { "Size", "Tall" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Dog" },
-                    { "Family", "Canidae" },
-                    { "Size", "Small" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Dog" },
+                        { "Family", "Canidae" },
+                        { "Size", "Small" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Wolf" },
-                    { "Family", "Canidae" },
-                    { "Size", "Tall" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Wolf" },
+                        { "Family", "Canidae" },
+                        { "Size", "Tall" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Racoon" },
-                    { "Family", "Canidae" },
-                    { "Size", "Small" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Racoon" },
+                        { "Family", "Canidae" },
+                        { "Size", "Small" },
+                        { "Quantity", 1 },
+                    }
                 },
-                new Dictionary<string, object> 
+                new Row
                 {
-                    { "Name", "Fox" },
-                    { "Family", "Canidae" },
-                    { "Size", "Small" },
-                    { "Quantity", 1 },
+                    Fields = new Dictionary<string, object> 
+                    {
+                        { "Name", "Fox" },
+                        { "Family", "Canidae" },
+                        { "Size", "Small" },
+                        { "Quantity", 1 },
+                    }
                 },
             };
 
@@ -75,7 +96,8 @@ namespace PivotDataProject
 
             string html = grid.GetHtml();
 
-            Console.WriteLine("Bye");
+            Console.WriteLine(html);
+            Console.ReadLine();
 
 
         }

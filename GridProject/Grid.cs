@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PivotDataProject
+namespace GridProject
 {
     class Grid
     {
-        private List<Dictionary<string, object>> originalData;
-        private List<Dictionary<string, object>> groupedData;
+        private List<Row> originalData;
+        private List<Row> groupedData;
         private ColumnDefinition[] columnDefinitions;
         private string[] pivotColumns;
         Dictionary<string, List<object>> pivotValues;
         private string[] aggregatedColumns;
 
-        public Grid(List<Dictionary<string, object>> originalData,
+        public Grid(List<Row> originalData,
                     ColumnDefinition[] columnDefinitions,
                     string[] pivotColumns,
                     string[] aggregatedColumns)
@@ -24,7 +24,7 @@ namespace PivotDataProject
             this.columnDefinitions = columnDefinitions;
             this.pivotColumns = pivotColumns;
             this.aggregatedColumns = aggregatedColumns;
-            this.groupedData = new List<Dictionary<string, object>>();
+            this.groupedData = new List<Row>();
             this.pivotValues = new Dictionary<string, List<object>>();
 
             // Initialize pivotValues
@@ -38,19 +38,19 @@ namespace PivotDataProject
             {
                 foreach (var row in originalData)
                 {
-                    if (!row.ContainsKey(column))
+                    if (!row.Fields.ContainsKey(column))
                     {
                         throw new Exception("Column '" + column + "' doesn't exist");
                     }
 
                     // Value already saved
-                    if (pivotValues[column].Contains(row[column]))
+                    if (pivotValues[column].Contains(row.Fields[column]))
                     {
                         continue;
                     }
 
                     // Save value
-                    pivotValues[column].Add(row[column]);
+                    pivotValues[column].Add(row.Fields[column]);
                 }
             }
 
@@ -67,7 +67,7 @@ namespace PivotDataProject
             {
                 foreach (var row in groupedData)
                 {
-                    row[column] = GetColumnSum(row, column);
+                    row.Fields[column] = GetColumnSum(row, column);
                 }
             }
         }
@@ -97,22 +97,15 @@ namespace PivotDataProject
             return html;
         }
 
-        private string RowAsHtml(Dictionary<string, object> row)
+        private string RowAsHtml(Row row)
         {
-            List<Dictionary<string, object>> children = new List<Dictionary<string, object>>();
-
-            if (row.ContainsKey("Children"))
-            {
-                children = (List<Dictionary<string, object>>)row["Children"];
-            }
-
-            string html = "   <tr class='" + (children.Any() ? "tr-group" : "") + "'>\n";
+            string html = "   <tr class='" + (row.Children.Any() ? "tr-group" : "") + "'>\n";
 
             foreach (ColumnDefinition columnDefinition in columnDefinitions)
             {
-                if (row.ContainsKey(columnDefinition.Field))
+                if (row.Fields.ContainsKey(columnDefinition.Field))
                 {
-                    html = html + "      <td class='" + columnDefinition.CssClass + "'>" + row[columnDefinition.Field] + "</td>\n";
+                    html = html + "      <td class='" + columnDefinition.CssClass + "'>" + row.Fields[columnDefinition.Field] + "</td>\n";
                 }
                 else
                 {
@@ -122,9 +115,9 @@ namespace PivotDataProject
 
             html = html + "   </tr>\n";
 
-            if (children.Any())
+            if (row.Children.Any())
             {
-                foreach (var child in children)
+                foreach (var child in row.Children)
                 {
                     html = html + RowAsHtml(child);
                 }
@@ -133,36 +126,31 @@ namespace PivotDataProject
             return html;
         }
 
-        private Dictionary<string, object> AsGroup(string key, object val, Dictionary<string, object> inheritedProperties)
+        private Row AsGroup(string key, object val, Dictionary<string, object> inheritedProperties)
         {
-            var node = new Dictionary<string, object>();
-            var children = new List<Dictionary<string, object>>();
+            var group = new Row();
+            var children = new List<Row>();
 
-            node[key] = val;
-            node["Children"] = children;
+            group.Fields[key] = val;
+            group.Children = children;
 
             foreach (KeyValuePair<string, object> kvp in inheritedProperties)
             {
-                if (kvp.Key.Equals("Children"))
-                {
-                    continue;
-                }
-
-                node[kvp.Key] = kvp.Value;
+                group.Fields[kvp.Key] = kvp.Value;
             }
 
             // Last pivot column contains the actual data
             if (pivotValues.Keys.LastOrDefault().Equals(key))
             {
-                foreach (var item in originalData)
+                foreach (var row in originalData)
                 {
-                    if (BelongsToGroup(item, node))
+                    if (BelongsToGroup(row, group))
                     {
-                        children.Add(item);
+                        children.Add(row);
                     }
                 }
 
-                return node;
+                return group;
             }
 
             int nextKeyIndex = pivotValues.Keys.ToList().IndexOf(key) + 1;
@@ -170,22 +158,17 @@ namespace PivotDataProject
 
             foreach (object val2 in pivotValues[nextKey])
             {
-                children.Add(AsGroup(nextKey, val2, node));
+                children.Add(AsGroup(nextKey, val2, group.Fields));
             }
 
-            return node;
+            return group;
         }
 
-        private bool BelongsToGroup(Dictionary<string, object> item, Dictionary<string, object> group)
+        private bool BelongsToGroup(Row row, Row group)
         {
-            foreach (KeyValuePair<string, object> kvp in group)
+            foreach (KeyValuePair<string, object> kvp in group.Fields)
             {
-                if (kvp.Key.Equals("Children")) 
-                {
-                    continue;
-                }
-
-                if (item[kvp.Key] != kvp.Value)
+                if (row.Fields[kvp.Key] != kvp.Value)
                 {
                     return false;
                 }
@@ -194,31 +177,24 @@ namespace PivotDataProject
             return true;
         }
 
-        private decimal GetColumnSum(Dictionary<string, object> row, string column)
+        private decimal GetColumnSum(Row row, string column)
         {
-            var children = new List<Dictionary<string, object>>();
-
-            if (row.ContainsKey("Children"))
-            {
-                children = (List<Dictionary<string, object>>)row["Children"];
-            }
-
             // No children
-            if (!children.Any())
+            if (!row.Children.Any())
             {
-                Type concreteType = (row[column]).GetType();
+                Type concreteType = (row.Fields[column]).GetType();
 
-                return Convert.ToDecimal(Convert.ChangeType(row[column], concreteType));
+                return Convert.ToDecimal(Convert.ChangeType(row.Fields[column], concreteType));
             }
 
             decimal sum = 0;
 
-            foreach (var child in children)
+            foreach (var child in row.Children)
             {
                 sum = sum + GetColumnSum(child, column);
             }
 
-            row[column] = sum;
+            row.Fields[column] = sum;
 
             return sum;
         }

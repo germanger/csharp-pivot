@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PivotDataProject
+namespace GridProject
 {
-    class Row
+    public class Row
     {
         public Dictionary<string, object> Fields { get; set; }
         public List<Row> Children { get; set; }
+
+        public Row()
+        {
+            this.Fields = new Dictionary<string, object>();
+            this.Children = new List<Row>();
+        }
     }
 }
