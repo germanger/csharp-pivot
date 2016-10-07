@@ -213,3 +213,10 @@ In this example we are going to group by "Size"
       <td class='align-right'>1</td>
    </tr>
 </table>
+
+## TO-DO:
+
+- Format numbers
+- Format dates
+- Allow column grouping in header (eg. Column "Birth": Column "Day" + Column "Month" + Column "Year")
+- Allow other types of aggregation: average, min, max
