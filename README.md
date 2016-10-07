@@ -1,7 +1,7 @@
 # csharp-pivot
 Pivot data with aggregation and output to HTML
 
-## Example
+## Example with one pivot
 
 Say your data is a list of animals
 
@@ -203,6 +203,101 @@ In this example we are going to group by "Size"
    <tr class=''>
       <td class=''>Felidae</td>
       <td class=''>Tiger</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Wolf</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+</table>
+
+## Example with multiple pivots
+
+With the same source data, this:
+
+    pivotColumns: new string[] { "Family", "Size" },
+    
+Will output this:
+
+<table>
+   <tr class='header'>
+      <th>Family</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Quant</th>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Felidae</td>
+      <td></td>
+      <td></td>
+      <td class='align-right'>3</td>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Felidae</td>
+      <td></td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Cat</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Felidae</td>
+      <td></td>
+      <td class=''>Tall</td>
+      <td class='align-right'>2</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Lion</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Felidae</td>
+      <td class=''>Tiger</td>
+      <td class=''>Tall</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Canidae</td>
+      <td></td>
+      <td></td>
+      <td class='align-right'>4</td>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Canidae</td>
+      <td></td>
+      <td class=''>Small</td>
+      <td class='align-right'>3</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Dog</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Racoon</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class=''>
+      <td class=''>Canidae</td>
+      <td class=''>Fox</td>
+      <td class=''>Small</td>
+      <td class='align-right'>1</td>
+   </tr>
+   <tr class='tr-group'>
+      <td class=''>Canidae</td>
+      <td></td>
       <td class=''>Tall</td>
       <td class='align-right'>1</td>
    </tr>
